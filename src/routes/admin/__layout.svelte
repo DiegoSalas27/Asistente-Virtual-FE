@@ -1,39 +1,38 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
 	import type { Usuario } from '$common/interfaces/usuario.interface';
-	import Sidebar from '$lib/components/sidebar/sidebar.svelte';
-	import AdminNavbar from '$lib/components/navbars/admin-navbar.svelte';
-	import HeaderStats from '$lib/components/headers/header-stats.svelte';
 	import FooterAdmin from '$lib/components/footers/footer-admin.svelte';
-	import userStore from '$lib/user';
-	import type { User } from '$lib/types';
+	import HeaderStats from '$lib/components/headers/header-stats.svelte';
+	import AdminNavbar from '$lib/components/navbars/admin-navbar.svelte';
+	import Sidebar from '$lib/components/sidebar/sidebar.svelte';
+	import userStore from '$lib/stores/user';
+	import { onDestroy } from 'svelte';
 
-	let loading = true;
+	let usuario: Partial<Usuario> = {};
 
-	onMount(async () => {
-		// Fetch the user from strapi
-		const res = await fetch('http://localhost:1337/auth/me', {
-			headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-		});
-		const user: User = await res.json();
-		loading = false;
-		if (res.ok) {
-			$userStore = user;
-		}
-	});
+	if ($userStore['custom:codigo_essalud'] === 'admin') {
+		usuario.nombres = $userStore.family_name;
+		usuario.apellidos = '';
+		usuario.cmp = null;
+		usuario.rol = 'admin';
+	} else {
+		usuario.nombres = $userStore.family_name;
+		usuario.apellidos = $userStore.family_name;
+		usuario.cmp = $userStore['custom:codigo_essalud'];
+		usuario.rol = 'doctor';
+	}
 
-	let usuario: Usuario = {
-		nombres: 'jaime',
-		apellidos: 'chincha',
-		cmp: '12345',
-		rol: 'admin'
-	};
-	let location = '';
-	page.subscribe((res) => {
-		location = res.path;
+	let location
+	let unsubscribe = page.subscribe((val) => { location = val.path; });
+
+	onDestroy(() => {
+		unsubscribe && unsubscribe();
 	});
 </script>
+
+<svelte:head>
+	<title>Asistente Virtual - Dashboard</title>
+</svelte:head>
 
 <div>
 	<Sidebar {usuario} />

@@ -1,8 +1,7 @@
-export interface IRecetaMedica {
-  id?:number;
-  code: string;
-  medications: string;
-  patient: string;
-  created_date?: string;
-  entity?: string;
+export interface IReceraMedica {
+	id: number;
+	codigo: string;
+	paciente: string;
+	created_date: string;
+	medicamentos: string;
 }

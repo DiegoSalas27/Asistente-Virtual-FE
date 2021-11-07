@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { signIn as login } from '$lib/auth';
+	import userStore from '$lib/stores/user';
 
 	let username = '';
 	let password = '';
 
-	function signIn() {
-		login(username, password);
+	async function signIn() {
+		await login(username, password, userStore);
 	}
 </script>
 

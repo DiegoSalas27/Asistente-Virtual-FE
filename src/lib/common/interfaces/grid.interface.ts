@@ -13,7 +13,8 @@ export interface IActionGrid {
   select?: string;
   selectSource?: any;
   type: string;
-  method: (id: number, entity: string) => void;
+  // method: (id: number, entity: string) => void;
+  method: (entity: any) => void;
 }
 
 export interface IColumnsGrid {
@@ -52,6 +53,7 @@ export interface IDataSource<T> {
   listaRecords: T[];
   numeroPaginas: number;
   totalRecords: number;
+  totalDb?: number;
 }
 
 export interface IGridProps<T> {

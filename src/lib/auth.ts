@@ -6,6 +6,8 @@ import {
 	CognitoUserPool,
 	CognitoUserSession
 } from 'amazon-cognito-identity-js';
+import type { Writable } from 'svelte/store';
+import type { User } from './types';
 
 const POOL_DATA = {
 	UserPoolId: 'us-east-1_OQyt7WBdH',
@@ -61,7 +63,7 @@ function signUp(
 	});
 }
 
-function signIn(username: string, password: string): void {
+async function signIn(username: string, password: string, userStore: Writable<Partial<User>>): Promise<void> {
 	const authData = {
 		Username: username,
 		Password: password
@@ -75,17 +77,63 @@ function signIn(username: string, password: string): void {
 	const cognitoUser = new CognitoUser(userData);
 
 	cognitoUser.authenticateUser(authDetails, {
-		onSuccess(result: CognitoUserSession) {
+		async onSuccess(result: CognitoUserSession) {
 			console.log(result);
+			const attributes = await isAuthenticated();
+
+			if (attributes) {
+				const user: Partial<User> = {};
+				attributes.forEach((attr, i) => {
+					if (i >= 1) {
+						const key = attributes[i].Name;
+						const value = attributes[i].Value;
+						user[key] = value;
+					}
+				});
+				userStore.set(user);
+			} 
 			goto('/admin/dashboard', { replaceState: true });
 		},
 		onFailure(err) {
 			console.log('Error', err);
 		}
 	});
-};
+}
 
+function getAuthenticatedUser(): CognitoUser {
+	return userPool.getCurrentUser();
+}
 
+function logout() {
+	getAuthenticatedUser().signOut(); // deletes auth tokens for you
+	goto('/auth/login', { replaceState: true });
+}
+
+async function isAuthenticated(): Promise<CognitoUserAttribute[]> {
+	const user = getAuthenticatedUser();
+	if (!user) return null;
+	return new Promise(function (resolve, reject) {
+		user.getSession((err, session) => {
+			if (err) {
+				reject(err)
+				console.log('Error', err);
+			} else {
+				if (session.isValid()) {
+					user.getUserAttributes(function (err, attributes) {
+						if (err) {
+							console.log('Error', err);
+							reject(err)
+						} else {
+							resolve(attributes)
+						}
+					});
+				} else {
+					resolve(null);
+				}
+			}
+		});
+	});
+}
 
 // exposing our auth object
-export { signUp, signIn };
+export { signUp, signIn, logout, isAuthenticated };

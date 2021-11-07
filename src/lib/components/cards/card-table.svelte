@@ -36,7 +36,6 @@
       }
     }
   }
-  console.log("pathsito", pathname);
 </script>
 
 <div

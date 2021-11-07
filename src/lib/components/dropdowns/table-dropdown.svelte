@@ -50,8 +50,7 @@
         on:click={() => {
           toggleDropdown();
           action.method(
-            dataSource.listaRecords[index].id,
-            dataSource.listaRecords[index].entity
+            dataSource.listaRecords[index]
           );
         }}
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"

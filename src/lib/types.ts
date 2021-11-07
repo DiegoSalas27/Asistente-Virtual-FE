@@ -1,14 +1,7 @@
 export interface User {
-	id: number;
-	username: string;
-	email: string;
-	provider: string;
-	confirmed: boolean;
-	blocked: boolean;
-	role: any;
-	created_at: string;
-	updated_at: string;
-	posts: any[];
+	name: string;
+	family_name: string;
+	'custom:codigo_essalud': string;
 }
 
 export interface AuthOptions {
