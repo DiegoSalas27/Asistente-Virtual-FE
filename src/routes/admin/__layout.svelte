@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+
 	import { page } from '$app/stores';
 	import type { Usuario } from '$common/interfaces/usuario.interface';
 	import FooterAdmin from '$lib/components/footers/footer-admin.svelte';
@@ -10,20 +12,26 @@
 
 	let usuario: Partial<Usuario> = {};
 
-	if ($userStore['custom:codigo_essalud'] === 'admin') {
-		usuario.nombres = $userStore.family_name;
-		usuario.apellidos = '';
-		usuario.cmp = null;
-		usuario.rol = 'admin';
+	if ($userStore == null) {
+		goto(`/auth/login`);
 	} else {
-		usuario.nombres = $userStore.family_name;
-		usuario.apellidos = $userStore.family_name;
-		usuario.cmp = $userStore['custom:codigo_essalud'];
-		usuario.rol = 'doctor';
+		if ($userStore['custom:codigo_essalud'] === 'admin') {
+			usuario.nombres = $userStore.family_name;
+			usuario.apellidos = '';
+			usuario.cmp = null;
+			usuario.rol = 'admin';
+		} else {
+			usuario.nombres = $userStore.family_name;
+			usuario.apellidos = $userStore.family_name;
+			usuario.cmp = $userStore['custom:codigo_essalud'];
+			usuario.rol = 'doctor';
+		}
 	}
 
-	let location
-	let unsubscribe = page.subscribe((val) => { location = val.path; });
+	let location;
+	let unsubscribe = page.subscribe((val) => {
+		location = val.path;
+	});
 
 	onDestroy(() => {
 		unsubscribe && unsubscribe();

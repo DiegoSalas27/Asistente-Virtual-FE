@@ -73,14 +73,18 @@
 >
 	<div class="rounded-t bg-white mb-0 px-6 py-6">
 		<div class="text-center flex justify-between">
-			<h6 class="text-blueGray-700 text-xl font-bold">{ !recetaMedica ? 'Registrar receta médica' : 'Visualizar receta médica'}</h6>
-			<button
-				on:click={register}
-				class="bg-red-400 text-white active:bg-red-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-				type="button"
-			>
-				Registrar
-			</button>
+			<h6 class="text-blueGray-700 text-xl font-bold">
+				{!recetaMedica ? 'Registrar receta médica' : 'Visualizar receta médica'}
+			</h6>
+			{#if !recetaMedica}
+				<button
+					on:click={register}
+					class="bg-red-400 text-white active:bg-red-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+					type="button"
+				>
+					Registrar
+				</button>
+			{/if}
 		</div>
 	</div>
 	<div class="flex-auto px-4 lg:px-10 py-10 pt-0">
@@ -113,13 +117,11 @@
 			<hr class="mt-6 border-b-1 border-blueGray-300" />
 			<div class="flex flex-wrap justify-between">
 				{#if recetaMedica}
-					<h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-					 Medicamentos
-					</h6>
+					<h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">Medicamentos</h6>
 				{:else}
-				<h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-					Ingresar medicamentos
-				</h6>
+					<h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+						Ingresar medicamentos
+					</h6>
 					<button
 						on:click={addProduct}
 						class="bg-red-400 text-white active:bg-red-500 font-bold uppercase text-ms px-3 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
@@ -131,85 +133,84 @@
 				{/if}
 			</div>
 			{#if recetaMedica}
-			{#each recetaMedica.productos as producto}
-				<div class="flex flex-wrap">
-					<div class="w-full lg:w-6/12 mr-2">
-						<div class="mb-3">
-							<label
-								class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-								for="grid-city"
-							>
-								Nombre de medicamento
-							</label>
-							<input
-								id="grid-city"
-								type="email"
-								class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-								value={producto.nombre}
-								disabled
-							/>
+				{#each recetaMedica.productos as producto}
+					<div class="flex flex-wrap">
+						<div class="w-full lg:w-6/12 mr-2">
+							<div class="mb-3">
+								<label
+									class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+									for="grid-city"
+								>
+									Nombre de medicamento
+								</label>
+								<input
+									id="grid-city"
+									type="email"
+									class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+									value={producto.nombre}
+									disabled
+								/>
+							</div>
+						</div>
+						<div class="w-full lg:w-4/12 ml-2">
+							<div class="relative mb-3">
+								<label
+									class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+									for="grid-city"
+								>
+									Indicaciones
+								</label>
+								<input
+									id="grid-city"
+									type="email"
+									class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+									value={producto.indicacion}
+									disabled
+								/>
+							</div>
 						</div>
 					</div>
-					<div class="w-full lg:w-4/12 ml-2">
-						<div class="relative mb-3">
-							<label
-								class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-								for="grid-city"
-							>
-								Indicaciones
-							</label>
-							<input
-								id="grid-city"
-								type="email"
-								class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-								value={producto.indicacion}
-								disabled
-							/>
-						</div>
-					</div>
-				</div>
-			{/each}
+				{/each}
 			{:else}
-			{#each medicamentos as medicamento}
-				<div class="flex flex-wrap">
-					<div class="w-full lg:w-6/12 mr-2">
-						<div class="mb-3">
-							<label
-								class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-								for="grid-city"
-							>
-								Nombre de medicamento
-							</label>
-							<input
-								id="grid-city"
-								type="email"
-								class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-								value={medicamento.productoNombre}
-								on:input={(e) => (medicamento.productoNombre = e.target.value)}
-							/>
+				{#each medicamentos as medicamento}
+					<div class="flex flex-wrap">
+						<div class="w-full lg:w-6/12 mr-2">
+							<div class="mb-3">
+								<label
+									class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+									for="grid-city"
+								>
+									Nombre de medicamento
+								</label>
+								<input
+									id="grid-city"
+									type="email"
+									class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+									value={medicamento.productoNombre}
+									on:input={(e) => (medicamento.productoNombre = e.target.value)}
+								/>
+							</div>
+						</div>
+						<div class="w-full lg:w-4/12 ml-2">
+							<div class="relative mb-3">
+								<label
+									class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+									for="grid-city"
+								>
+									Indicaciones
+								</label>
+								<input
+									id="grid-city"
+									type="email"
+									class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+									value={medicamento.indicacion}
+									on:input={(e) => (medicamento.indicacion = e.target.value)}
+								/>
+							</div>
 						</div>
 					</div>
-					<div class="w-full lg:w-4/12 ml-2">
-						<div class="relative mb-3">
-							<label
-								class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-								for="grid-city"
-							>
-								Indicaciones
-							</label>
-							<input
-								id="grid-city"
-								type="email"
-								class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-								value={medicamento.indicacion}
-								on:input={(e) => (medicamento.indicacion = e.target.value)}
-							/>
-						</div>
-					</div>
-				</div>
-			{/each}
+				{/each}
 			{/if}
-			
 
 			<hr class="mt-6 border-b-1 border-blueGray-300" />
 		</form>

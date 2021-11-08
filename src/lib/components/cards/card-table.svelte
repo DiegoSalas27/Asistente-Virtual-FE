@@ -2,6 +2,7 @@
   // core components
   import TableDropdown from "../dropdowns/table-dropdown.svelte";
   import type { IGridProps } from "../../common/interfaces/grid.interface";
+  import userStore from '$lib/stores/user';
 
   const bootstrap = "../assets/img/bootstrap.jpg";
   const angular = "../assets/img/angular.jpg";
@@ -36,6 +37,8 @@
       }
     }
   }
+
+  console.log("YEEEII", $userStore)
 </script>
 
 <div
@@ -56,7 +59,7 @@
         >
           {pathname === "/admin/doctores" ? "Doctores" : "Recetas Médicas"}
         </h3>
-        {#if pathname === "/admin/recetas-medicas"}
+        {#if pathname === "/admin/recetas-medicas" && $userStore?.name !== 'admin'}
           <button
             on:click={gridConfig.create}
             class="bg-red-400 text-white active:bg-red-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"

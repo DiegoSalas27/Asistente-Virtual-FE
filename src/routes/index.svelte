@@ -11,6 +11,8 @@
 		} else {
 			goto('/auth/login');
 		}
+	} else {
+		goto('/auth/login');
 	}
 </script>
 
