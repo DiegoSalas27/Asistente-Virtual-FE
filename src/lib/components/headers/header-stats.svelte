@@ -44,7 +44,7 @@
 		<div>
 			<!-- Card stats -->
 			<div class="flex flex-wrap">
-				{#if pathname == '/admin/recetas-medicas'}
+				{#if pathname.includes('/admin/recetas-medicas')}
 					<div class="w-full lg:w-6/12 xl:w-6/12 px-4">
 						<CardStats
 							statSubtitle="Total recetas"
@@ -61,7 +61,7 @@
 							statIconColor="bg-orange-500"
 						/>
 					</div>
-				{:else if pathname == '/admin/doctores'}
+				{:else if pathname.includes('/admin/doctores')}
 					<div class="w-full lg:w-6/12 xl:w-6/12 px-4">
 						<CardStats
 							statSubtitle="Total Doctores"

@@ -1,4 +1,4 @@
-<script context="module">
+<!-- <script context="module">
 	export async function load() {
 			return {
 					status: 302,
@@ -7,4 +7,4 @@
 	}
 </script>
 
-<h1>Cargando...</h1>
+<h1>Cargando...</h1> -->

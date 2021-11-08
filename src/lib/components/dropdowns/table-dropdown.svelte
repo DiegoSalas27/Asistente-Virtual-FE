@@ -45,8 +45,8 @@
       : 'hidden'}"
   >
     {#each actions as action (action.type)}
+      <!-- svelte-ignore a11y-missing-attribute -->
       <a
-        href="#pablo"
         on:click={() => {
           toggleDropdown();
           action.method(

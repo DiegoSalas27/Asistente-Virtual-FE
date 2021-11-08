@@ -11,6 +11,7 @@
 	import recetaMedicaStore from '$lib/stores/medicalAppointments';
 	import { apiUrls } from '$lib/common/constants/apiUrls';
 	import userStore from '$lib/stores/user';
+	import { goto } from '$app/navigation';
 
 	let pathname = $page.path;
 
@@ -29,10 +30,11 @@
 	let loading = true;
 
 	onMount(async () => {
-    let afterUrl = $userStore.name === 'admin' ? '/front/list?page=1&pageSize=5' : `/front/list?page=1&pageSize=5&doctorId=${$userStore.name}`; 
-		const res: any = await axios.get(
-			`${apiUrls.RECETAS_MEDICAS_URL}${afterUrl}`
-		);
+		let afterUrl =
+			$userStore.name === 'admin'
+				? '/front/list?page=1&pageSize=5'
+				: `/front/list?page=1&pageSize=5&doctorId=${$userStore.name}`;
+		const res: any = await axios.get(`${apiUrls.RECETAS_MEDICAS_URL}${afterUrl}`);
 
 		const recetasMedicas = (await res.data.result) as IDataSource<IReceraMedica>;
 
@@ -43,20 +45,12 @@
 		loading = false;
 	});
 
-	function remove() {
-		console.log('removed');
-	}
-
-	function edit() {
-		console.log('edit');
-	}
-
-	function view() {
-		console.log('view');
+	function view(entity: any) {
+		goto(`/admin/recetas-medicas/${entity.id}`)
 	}
 
 	function createPrescription() {
-		console.log('Create prescription');
+		goto(`/admin/recetas-medicas/new`)
 	}
 </script>
 

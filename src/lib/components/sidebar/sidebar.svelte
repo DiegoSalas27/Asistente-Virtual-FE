@@ -4,7 +4,7 @@
 	import type { Usuario } from '$common/interfaces/usuario.interface';
 
 	let collapseShow = 'hidden';
-	const bot = '../assets/img/virtual-assistant.png';
+	const bot = '/assets/img/virtual-assistant.png';
 
 	function toggleCollapseShow(classes) {
 		collapseShow = classes;
@@ -94,12 +94,12 @@
 				<li class="items-center">
 					<a
 						href="/admin/recetas-medicas"
-						class="text-xs uppercase py-3 font-bold block {location == '/admin/recetas-medicas'
+						class="text-xs uppercase py-3 font-bold block {location.includes('/admin/recetas-medicas')
 							? 'text-red-500 hover:text-red-600'
 							: 'text-blueGray-700 hover:text-blueGray-500'}"
 					>
 						<i
-							class="fas fa-notes-medical mr-2 text-sm {location == '/admin/recetas-medicas'
+							class="fas fa-notes-medical mr-2 text-sm {location.includes('/admin/recetas-medicas')
 								? 'opacity-75'
 								: 'text-blueGray-300'}"
 						/>
@@ -139,7 +139,7 @@
 					</a>
 				</li>
 
-				<!-- <li class="items-center">
+				<li class="items-center">
           <a
             href="/admin/settings"
             class="text-xs uppercase py-3 font-bold block {location == '/admin/settings' ? 'text-red-500 hover:text-red-600':'text-blueGray-700 hover:text-blueGray-500'}"
@@ -149,21 +149,19 @@
             ></i>
             Settings
           </a>
-        </li> -->
+        </li>
 
-				<!-- <li class="items-center">
+				<li class="items-center">
           <a
-            use:link
             href="/admin/tables"
-            class="text-xs uppercase py-3 font-bold block {location.href.indexOf('/admin/tables') !== -1 ? 'text-red-500 hover:text-red-600':'text-blueGray-700 hover:text-blueGray-500'}"
+            class="text-xs uppercase py-3 font-bold block {location.includes('/admin/tables') ? 'text-red-500 hover:text-red-600':'text-blueGray-700 hover:text-blueGray-500'}"
           >
             <i
-              class="fas fa-table mr-2 text-sm {location.href.indexOf('/admin/tables') !== -1 ? 'opacity-75' : 'text-blueGray-300'}"
+              class="fas fa-table mr-2 text-sm {location.includes('/admin/tables') ? 'opacity-75' : 'text-blueGray-300'}"
             ></i>
             Tables
           </a>
-        </li> -->
-				<!-- 
+        </li> 
         <li class="items-center">
           <a
             href="/admin/maps"
@@ -174,7 +172,7 @@
             ></i>
             Maps
           </a>
-        </li> -->
+        </li>
 			</ul>
 
 			<!-- Divider -->
